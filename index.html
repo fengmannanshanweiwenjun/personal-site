@@ -757,24 +757,47 @@ nav {
 
 /* ==================== FOOTER ==================== */
 footer {
-  padding: 3rem 0;
+  padding: 4rem 0 3rem;
   border-top: 1px solid var(--border);
-  text-align: center;
 }
 
 .footer-quote {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-style: italic;
+  font-weight: 400;
   color: var(--accent);
-  margin-bottom: 0.8rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
+  margin-bottom: 2rem;
 }
 
-footer p {
+.footer-line {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 2rem;
+}
+
+.footer-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer-info .design-by {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  font-weight: 300;
+}
+
+.footer-info .copyright {
   font-size: 0.75rem;
   color: var(--text-secondary);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
 }
 
 /* ==================== ADMIN PANEL ==================== */
@@ -1179,8 +1202,14 @@ footer p {
 
 <!-- Footer -->
 <footer>
-  <div class="footer-quote" id="footerQuote">世间所有的美好，都值得被记录</div>
-  <p>© 2026 中午见 · 诗意栖居</p>
+  <div class="section-container">
+    <div class="footer-quote" id="footerQuote">世间所有的美好，都值得被记录</div>
+    <div class="footer-line"></div>
+    <div class="footer-info">
+      <span class="design-by">Design by <strong>中午见</strong></span>
+      <span class="copyright">© 2026 中午见. All rights reserved.</span>
+    </div>
+  </div>
 </footer>
 
 <!-- Lightbox -->
@@ -1461,7 +1490,8 @@ function renderSettings() {
     document.querySelector('.nav-brand').textContent = s.title;
     document.querySelector('.hero-title').innerHTML = '<span class="accent">' + s.title.charAt(0) + '</span>' + s.title.slice(1);
     document.title = s.title;
-    document.querySelector('footer p').textContent = '© 2026 ' + s.title + ' · 诗意栖居';
+    document.querySelector('.footer-info .design-by strong').textContent = s.title;
+    document.querySelector('.footer-info .copyright').textContent = '© 2026 ' + s.title + '. All rights reserved.';
   }
 
   // Fill settings form
