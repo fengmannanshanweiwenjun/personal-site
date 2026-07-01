@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>拾光集</title>
+<title>温俊</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
@@ -71,7 +71,7 @@ nav {
   transition: all 0.5s var(--ease);
 }
 
-nav.hidden-nav { transform: translateY(-100%); }
+/* nav always visible */
 
 .nav-inner {
   max-width: 1400px; margin: 0 auto;
@@ -82,9 +82,9 @@ nav.hidden-nav { transform: translateY(-100%); }
 
 .nav-brand {
   font-family: var(--font-hand);
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   color: var(--accent);
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 }
 
 .nav-links { display: flex; gap: 2.5rem; list-style: none; }
@@ -333,10 +333,6 @@ nav.hidden-nav { transform: translateY(-100%); }
 
 .about-text p { margin-bottom: 1.5rem; }
 
-.about-text .highlight {
-  color: var(--text-primary);
-  font-weight: 400;
-}
 
 .about-stats {
   display: flex; gap: 3rem;
@@ -1047,7 +1043,7 @@ footer p {
 <!-- Nav -->
 <nav id="mainNav">
   <div class="nav-inner">
-    <a href="#" class="nav-brand">拾光集</a>
+    <a href="#" class="nav-brand">温俊</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#home" class="active">首页</a></li>
       <li><a href="#about">关于</a></li>
@@ -1067,7 +1063,7 @@ footer p {
   <div class="hero-content">
     <p class="hero-greeting" id="heroGreeting">你好呀，欢迎来到这里</p>
     <h1 class="hero-title">
-      拾<span class="accent">光</span>集
+      <span class="accent">温</span>俊
     </h1>
     <p class="hero-subtitle" id="heroSubtitle">
       我留不住时间，于是记录<br>
@@ -1094,8 +1090,8 @@ footer p {
         <img id="aboutAvatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Crect fill='%2314141f' width='300' height='300'/%3E%3Ctext x='150' y='155' text-anchor='middle' fill='%2360a5fa' font-size='60' font-family='serif'%3E📷%3C/text%3E%3C/svg%3E" alt="avatar">
       </div>
       <div class="about-text fade-in" id="aboutText">
-        <p>你好呀，欢迎来到我的小世界。我是一个<span class="highlight">不可救药的浪漫主义患者</span>，喜欢雨季、凉爽的天气、和安静的咖啡店。</p>
-        <p>在这里，你会看到我写的<span class="highlight">诗</span>，拍的<span class="highlight">照片</span>，以及生活中那些值得被记住的<span class="highlight">瞬间</span>。</p>
+        <p>你好呀，欢迎来到我的小世界。我是一个不可救药的浪漫主义患者，喜欢雨季、凉爽的天气、和安静的咖啡店。</p>
+        <p>在这里，你会看到我写的诗、拍的照片，以及生活中那些值得被记住的瞬间。</p>
         <p>如果有幸在同一座城市，也许某个转角，你会路过我的文字，而我会期待与你冥冥之中的相遇。</p>
         <div class="about-stats">
           <div class="stat-item">
@@ -1173,7 +1169,7 @@ footer p {
 <!-- Footer -->
 <footer>
   <div class="footer-quote" id="footerQuote">世间所有的美好，都值得被记录</div>
-  <p>© 2026 拾光集 · 诗意栖居</p>
+  <p>© 2026 温俊 · 诗意栖居</p>
 </footer>
 
 <!-- Lightbox -->
@@ -1325,7 +1321,7 @@ footer p {
         </div>
         <div class="form-group">
           <label>关于我 - 介绍文字</label>
-          <textarea id="settingAbout" rows="6" placeholder="支持 HTML，如 <span class='highlight'>重点</span>"></textarea>
+          <textarea id="settingAbout" rows="6" placeholder="支持 HTML"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">保存设置</button>
       </form>
@@ -1371,7 +1367,7 @@ function loadSampleData() {
   ]);
 
   S.set('settings', {
-    title: '拾光集',
+    title: '温俊',
     greeting: '你好呀，欢迎来到这里',
     subtitle: '我留不住时间，于是记录\n用文字与光影，编织生活的诗意',
     avatar: '',
@@ -1449,6 +1445,13 @@ function renderSettings() {
   document.getElementById('contactLocation').textContent = s.location || '';
   if (s.avatar) document.getElementById('aboutAvatar').src = s.avatar;
   if (s.about) document.getElementById('aboutText').innerHTML = s.about;
+  // Update nav brand & hero title
+  if (s.title) {
+    document.querySelector('.nav-brand').textContent = s.title;
+    document.querySelector('.hero-title').innerHTML = '<span class="accent">' + s.title.charAt(0) + '</span>' + s.title.slice(1);
+    document.title = s.title;
+    document.querySelector('footer p').textContent = '© 2026 ' + s.title + ' · 诗意栖居';
+  }
 
   // Fill settings form
   ['Title','Greeting','Subtitle','Avatar','Footer','Email','Social','Location','About'].forEach(k => {
@@ -1746,11 +1749,17 @@ document.addEventListener('keydown', e => { if (e.key==='Escape') { closePoemMod
 
 // ==================== NAV ====================
 const nav = document.getElementById('mainNav');
-let lastScroll = 0;
 window.addEventListener('scroll', () => {
   const st = window.scrollY;
-  nav.classList.toggle('hidden-nav', st > lastScroll && st > 100);
-  lastScroll = st;
+
+  // Solid nav background after hero
+  if (st > 50) {
+    nav.style.background = 'rgba(10,10,15,0.95)';
+    nav.style.borderBottomColor = 'rgba(30,30,46,0.8)';
+  } else {
+    nav.style.background = 'rgba(10,10,15,0.8)';
+    nav.style.borderBottomColor = 'rgba(30,30,46,0.5)';
+  }
 
   // Active link
   document.querySelectorAll('section[id]').forEach(sec => {
