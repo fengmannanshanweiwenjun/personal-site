@@ -754,15 +754,6 @@ footer {
   text-align: center;
 }
 
-.footer-deco {
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 3vw, 1.6rem);
-  font-style: italic;
-  color: var(--accent);
-  letter-spacing: 0.1em;
-  margin-bottom: 1rem;
-}
-
 .footer-quote {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 4vw, 2.5rem);
@@ -1084,7 +1075,6 @@ footer {
       <li><a href="#about">关于</a></li>
       <li><a href="#poetry">诗歌</a></li>
       <li><a href="#gallery">影集</a></li>
-      <li><a href="#contact">联系</a></li>
     </ul>
     <button class="menu-btn" id="menuBtn">☰</button>
   </div>
@@ -1171,41 +1161,11 @@ footer {
 </section>
 
 <!-- ===== CONTACT ===== -->
-<section class="section" id="contact">
-  <div class="section-container">
-    <div class="section-line fade-in"></div>
-    <h2 class="section-title fade-in">联系我</h2>
-    <p class="section-subtitle fade-in">如果我们的灵魂能共鸣</p>
-    <div class="contact-grid">
-      <div class="contact-info fade-in" id="contactInfo">
-        <div class="contact-item">
-          <div class="contact-icon">✉</div>
-          <span id="contactEmail">hello@example.com</span>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">📷</div>
-          <span id="contactSocial">@yourname</span>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">📍</div>
-          <span id="contactLocation">中国</span>
-        </div>
-      </div>
-      <form class="contact-form fade-in" onsubmit="event.preventDefault(); showToast('感谢你的来信 💌'); this.reset();">
-        <input type="text" placeholder="你的名字" required>
-        <input type="email" placeholder="你的邮箱" required>
-        <textarea placeholder="想说的话..." required></textarea>
-        <button type="submit" class="btn-submit">发送</button>
-      </form>
-    </div>
-  </div>
-</section>
 
 <!-- Footer -->
 <footer>
   <div class="section-container">
-    <div class="footer-deco">「 飘飘何所似，天地一沙鸥 」</div>
-    <div class="footer-quote" id="footerQuote">世间所有的美好，都值得被记录</div>
+    <div class="footer-quote" id="footerQuote">欢迎你来见证我</div>
     <div class="footer-line"></div>
     <div class="footer-info">
       <span class="design-by">Design by <strong>中午见</strong></span>
@@ -1347,20 +1307,6 @@ footer {
             <input type="text" id="settingFooter" placeholder="世间所有的美好，都值得被记录">
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>联系邮箱</label>
-            <input type="text" id="settingEmail" placeholder="hello@example.com">
-          </div>
-          <div class="form-group">
-            <label>社交媒体</label>
-            <input type="text" id="settingSocial" placeholder="@yourname">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>所在城市</label>
-          <input type="text" id="settingLocation" placeholder="中国">
-        </div>
         <div class="form-group">
           <label>关于我 - 介绍文字</label>
           <textarea id="settingAbout" rows="6" placeholder="支持 HTML"></textarea>
@@ -1413,7 +1359,7 @@ function loadSampleData() {
     greeting: '你好呀，欢迎来到这里',
     subtitle: '我留不住时间，于是记录\n用文字与光影，编织生活的诗意',
     avatar: '',
-    footer: '世间所有的美好，都值得被记录',
+    footer: '欢迎你来见证我',
     email: 'hello@example.com',
     social: '@yourname',
     location: '中国',
@@ -1481,10 +1427,7 @@ function renderSettings() {
   const s = S.get('settings') || {};
   document.getElementById('heroGreeting').textContent = s.greeting || '你好呀，欢迎来到这里';
   document.getElementById('heroSubtitle').innerHTML = (s.subtitle || '我留不住时间，于是记录').replace(/\n/g, '<br>');
-  document.getElementById('footerQuote').textContent = s.footer || '世间所有的美好，都值得被记录';
-  document.getElementById('contactEmail').textContent = s.email || '';
-  document.getElementById('contactSocial').textContent = s.social || '';
-  document.getElementById('contactLocation').textContent = s.location || '';
+  document.getElementById('footerQuote').textContent = s.footer || '欢迎你来见证我';
   if (s.avatar) document.getElementById('aboutAvatar').src = s.avatar;
   if (s.about) document.getElementById('aboutText').innerHTML = s.about;
   // Update nav brand & hero title
@@ -1497,7 +1440,7 @@ function renderSettings() {
   }
 
   // Fill settings form
-  ['Title','Greeting','Subtitle','Avatar','Footer','Email','Social','Location','About'].forEach(k => {
+  ['Title','Greeting','Subtitle','Avatar','Footer','About'].forEach(k => {
     const el = document.getElementById('setting'+k);
     if (el) el.value = s[k.toLowerCase()] || '';
   });
@@ -1642,7 +1585,7 @@ function deletePhoto(id) {
 document.getElementById('settingsForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const s = {};
-  ['Title','Greeting','Subtitle','Avatar','Footer','Email','Social','Location','About'].forEach(k => {
+  ['Title','Greeting','Subtitle','Avatar','Footer','About'].forEach(k => {
     const el = document.getElementById('setting'+k);
     if (el) s[k.toLowerCase()] = el.value.trim();
   });
