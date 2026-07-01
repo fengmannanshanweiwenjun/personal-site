@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拾光集 — 诗意栖居</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<style>
+/* ==================== CSS VARIABLES ==================== */
+:root {
+  --bg: #faf8f5;
+  --bg-card: #ffffff;
+  --text: #2c2c2c;
+  --text-light: #7a7a7a;
+  --accent: #c4956a;
+  --accent-light: #e8d5c4;
+  --accent-glow: rgba(196,149,106,0.15);
+  --border: #e8e4df;
+  --shadow: 0 2px 20px rgba(0,0,0,0.06);
+  --shadow-hover: 0 8px 40px rgba(0,0,0,0.1);
+  --radius: 12px;
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --font-serif: 'Noto Serif SC', 'Songti SC', serif;
+  --font-display: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+}
+
+[data-theme="dark"] {
+  --bg: #1a1a1a;
+  --bg-card: #252525;
+  --text: #e8e4df;
+  --text-light: #999;
+  --accent: #d4a574;
+  --accent-light: #3a3028;
+  --accent-glow: rgba(212,165,116,0.1);
+  --border: #333;
+  --shadow: 0 2px 20px rgba(0,0,0,0.3);
+  --shadow-hover: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+/* ==================== RESET & BASE ==================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-serif);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+/* ==================== SCROLLBAR ==================== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+/* ==================== NAVIGATION ==================== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(250,248,245,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: all var(--transition);
+}
+
+[data-theme="dark"] nav {
+  background: rgba(26,26,26,0.85);
+}
+
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+
+.nav-brand {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 2px;
+}
+
+.nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
+
+.nav-links a {
+  text-decoration: none; color: var(--text-light);
+  font-size: 0.95rem; letter-spacing: 1px;
+  transition: color var(--transition);
+  position: relative;
+}
+
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 2px; background: var(--accent);
+  transition: width var(--transition);
+}
+
+.nav-links a:hover, .nav-links a.active { color: var(--accent); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+.theme-toggle {
+  background: none; border: 1px solid var(--border);
+  border-radius: 50%; width: 36px; height: 36px;
+  cursor: pointer; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition);
+}
+
+.theme-toggle:hover { border-color: var(--accent); background: var(--accent-glow); }
+
+/* Mobile menu */
+.menu-btn {
+  display: none; background: none; border: none;
+  font-size: 1.5rem; color: var(--text); cursor: pointer;
+}
+
+/* ==================== HERO ==================== */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, var(--accent-glow) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(196,149,106,0.08) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  color: var(--accent);
+  letter-spacing: 6px;
+  margin-bottom: 1rem;
+  animation: fadeInUp 1s ease;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  color: var(--text-light);
+  letter-spacing: 4px;
+  margin-bottom: 2rem;
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+.hero-poem {
+  max-width: 500px;
+  font-size: 1.05rem;
+  line-height: 2.2;
+  color: var(--text-light);
+  animation: fadeInUp 1s ease 0.4s both;
+  position: relative;
+}
+
+.hero-poem::before, .hero-poem::after {
+  font-size: 3rem;
+  color: var(--accent);
+  opacity: 0.3;
+  position: absolute;
+  font-family: serif;
+}
+
+.hero-poem::before { content: '\201C'; top: -20px; left: -20px; }
+.hero-poem::after { content: '\201D'; bottom: -30px; right: -10px; }
+
+.scroll-hint {
+  position: absolute; bottom: 2rem;
+  animation: bounce 2s infinite;
+  color: var(--text-light);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+}
+
+.scroll-hint span {
+  display: block;
+  width: 24px; height: 24px;
+  border-right: 2px solid var(--text-light);
+  border-bottom: 2px solid var(--text-light);
+  transform: rotate(45deg);
+  margin: 8px auto 0;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+/* ==================== SECTIONS ==================== */
+section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: var(--text);
+  letter-spacing: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.section-header .line {
+  width: 60px; height: 2px;
+  background: var(--accent);
+  margin: 1rem auto;
+}
+
+.section-header p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+/* ==================== POETRY ==================== */
+.poetry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+.poem-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  transition: all var(--transition);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.poem-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.poem-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.poem-card:hover::before { opacity: 1; }
+
+.poem-card .poem-date {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.poem-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+  letter-spacing: 2px;
+}
+
+.poem-card .poem-preview {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: pre-line;
+}
+
+.poem-card .poem-tags {
+  margin-top: 1.2rem;
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border: 1px solid var(--accent-light);
+  border-radius: 20px;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+/* ==================== PHOTOS ==================== */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.photo-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  aspect-ratio: 4/3;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+
+.photo-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition);
+}
+
+.photo-card:hover img { transform: scale(1.05); }
+
+.photo-card .photo-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(transparent 50%, rgba(0,0,0,0.6));
+  opacity: 0;
+  transition: opacity var(--transition);
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+
+.photo-card:hover .photo-overlay { opacity: 1; }
+
+.photo-overlay h4 {
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+
+.photo-overlay p {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+/* Photo masonry variant */
+.photo-masonry {
+  columns: 3;
+  column-gap: 1.5rem;
+}
+
+.photo-masonry .photo-card {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  aspect-ratio: auto;
+}
+
+.photo-masonry .photo-card img {
+  height: auto;
+  display: block;
+}
+
+/* ==================== LIGHTBOX ==================== */
+.lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.92);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.lightbox.active { display: flex; opacity: 1; }
+
+.lightbox-content {
+  max-width: 90vw; max-height: 85vh;
+  position: relative;
+}
+
+.lightbox-content img {
+  max-width: 100%; max-height: 85vh;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.lightbox-close {
+  position: fixed; top: 1.5rem; right: 1.5rem;
+  background: none; border: none;
+  color: #fff; font-size: 2rem;
+  cursor: pointer; z-index: 201;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.lightbox-close:hover { background: rgba(255,255,255,0.1); }
+
+.lightbox-caption {
+  text-align: center;
+  color: rgba(255,255,255,0.8);
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+/* ==================== POEM MODAL ==================== */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 2rem;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  max-width: 600px; width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 3rem 2.5rem;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.modal-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: none; border: none;
+  font-size: 1.5rem; color: var(--text-light);
+  cursor: pointer;
+}
+
+.modal h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  letter-spacing: 3px;
+}
+
+.modal .poem-meta {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+.modal .poem-body {
+  font-size: 1.05rem;
+  line-height: 2.4;
+  white-space: pre-line;
+  text-align: center;
+  color: var(--text);
+}
+
+/* ==================== MANAGE PANEL ==================== */
+.manage-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.manage-tabs {
+  display: flex; gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+
+.manage-tab {
+  background: none; border: none;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all var(--transition);
+  letter-spacing: 1px;
+}
+
+.manage-tab.active {
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.manage-panel { display: none; }
+.manage-panel.active { display: block; }
+
+/* Form styles */
+.form-group { margin-bottom: 1.5rem; }
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--text);
+  transition: border-color var(--transition);
+  outline: none;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  border-color: var(--accent);
+}
+
+.form-group textarea {
+  min-height: 150px;
+  resize: vertical;
+  line-height: 2;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 1px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-light);
+}
+
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn-danger {
+  background: transparent;
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.btn-danger:hover { background: #e74c3c; color: #fff; }
+
+/* Work list */
+.work-list {
+  display: flex; flex-direction: column; gap: 0.8rem;
+}
+
+.work-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.2rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: all var(--transition);
+}
+
+.work-item:hover { border-color: var(--accent); }
+
+.work-item-info h4 {
+  font-size: 1rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.2rem;
+}
+
+.work-item-info span {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.work-item-actions { display: flex; gap: 0.5rem; }
+
+/* Photo upload preview */
+.upload-area {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  color: var(--text-light);
+}
+
+.upload-area:hover {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.upload-area input[type="file"] { display: none; }
+
+.upload-preview {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.upload-preview img {
+  width: 80px; height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+}
+
+/* ==================== FOOTER ==================== */
+footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--text-light);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  border-top: 1px solid var(--border);
+}
+
+footer .footer-poem {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  letter-spacing: 3px;
+}
+
+/* ==================== TOAST ==================== */
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  box-shadow: var(--shadow-hover);
+  z-index: 400;
+  font-size: 0.9rem;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 64px; left: 0; right: 0;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    gap: 1rem;
+  }
+  .menu-btn { display: block; }
+
+  .poetry-grid { grid-template-columns: 1fr; }
+  .photo-grid { grid-template-columns: repeat(2, 1fr); }
+  .photo-masonry { columns: 2; }
+
+  section { padding: 4rem 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  .photo-grid { grid-template-columns: 1fr; }
+  .photo-masonry { columns: 1; }
+}
+
+/* ==================== ANIMATIONS ==================== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">拾光集</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">首页</a></li>
+      <li><a href="#poetry">诗歌</a></li>
+      <li><a href="#photos">影集</a></li>
+      <li><a href="#manage">管理</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <button class="theme-toggle" id="themeToggle" title="切换主题">🌙</button>
+      <button class="menu-btn" id="menuBtn">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <h1 class="hero-title">拾光集</h1>
+  <p class="hero-subtitle">以诗为舟 · 以影为帆</p>
+  <div class="hero-poem">
+    生活不止眼前的苟且<br>
+    还有诗和远方的田野<br>
+    赤手空拳来到人世间<br>
+    为找到那片海不顾一切
+  </div>
+  <div class="scroll-hint">
+    <span></span>
+  </div>
+</section>
+
+<!-- Poetry Section -->
+<section id="poetry">
+  <div class="section-header fade-in">
+    <h2>诗 歌</h2>
+    <div class="line"></div>
+    <p>文字是灵魂的回声</p>
+  </div>
+  <div class="poetry-grid" id="poetryGrid">
+    <!-- Dynamic content -->
+  </div>
+</section>
+
+<!-- Photos Section -->
+<section id="photos">
+  <div class="section-header fade-in">
+    <h2>影 集</h2>
+    <div class="line"></div>
+    <p>光影之间，皆是故事</p>
+  </div>
+  <div class="photo-masonry" id="photoGrid">
+    <!-- Dynamic content -->
+  </div>
+</section>
+
+<!-- Manage Section -->
+<section id="manage">
+  <div class="section-header fade-in">
+    <h2>作品管理</h2>
+    <div class="line"></div>
+    <p>添加、编辑你的创作</p>
+  </div>
+
+  <div class="manage-section">
+    <div class="manage-tabs">
+      <button class="manage-tab active" data-tab="addPoem">✍️ 写诗</button>
+      <button class="manage-tab" data-tab="addPhoto">📷 上传照片</button>
+      <button class="manage-tab" data-tab="managePoems">📝 管理诗歌</button>
+      <button class="manage-tab" data-tab="managePhotos">🖼️ 管理照片</button>
+    </div>
+
+    <!-- Add Poem -->
+    <div class="manage-panel active" id="panel-addPoem">
+      <form id="poemForm">
+        <div class="form-group">
+          <label>诗名</label>
+          <input type="text" id="poemTitle" placeholder="给你的诗取个名字" required>
+        </div>
+        <div class="form-group">
+          <label>日期</label>
+          <input type="date" id="poemDate">
+        </div>
+        <div class="form-group">
+          <label>标签（用逗号分隔）</label>
+          <input type="text" id="poemTags" placeholder="如：抒情, 思乡, 夜">
+        </div>
+        <div class="form-group">
+          <label>正文</label>
+          <textarea id="poemContent" placeholder="在这里写下你的诗&#10;&#10;每一行&#10;都是心灵的痕迹" required></textarea>
+        </div>
+        <input type="hidden" id="poemEditId" value="">
+        <button type="submit" class="btn btn-primary">保存诗歌</button>
+        <button type="button" class="btn btn-secondary" onclick="resetPoemForm()">清空</button>
+      </form>
+    </div>
+
+    <!-- Add Photo -->
+    <div class="manage-panel" id="panel-addPhoto">
+      <form id="photoForm">
+        <div class="form-group">
+          <label>照片标题</label>
+          <input type="text" id="photoTitle" placeholder="给这张照片取个名字">
+        </div>
+        <div class="form-group">
+          <label>描述</label>
+          <input type="text" id="photoDesc" placeholder="一句话描述">
+        </div>
+        <div class="form-group">
+          <label>上传照片</label>
+          <div class="upload-area" id="uploadArea">
+            <input type="file" id="photoFile" accept="image/*">
+            <p>📷 点击或拖拽上传照片</p>
+            <p style="font-size:0.8rem;margin-top:0.5rem;">支持 JPG / PNG / WebP</p>
+          </div>
+          <div class="upload-preview" id="uploadPreview"></div>
+        </div>
+        <input type="hidden" id="photoEditId" value="">
+        <button type="submit" class="btn btn-primary">保存照片</button>
+      </form>
+    </div>
+
+    <!-- Manage Poems -->
+    <div class="manage-panel" id="panel-managePoems">
+      <div class="work-list" id="poemList">
+        <!-- Dynamic -->
+      </div>
+    </div>
+
+    <!-- Manage Photos -->
+    <div class="manage-panel" id="panel-managePhotos">
+      <div class="work-list" id="photoList">
+        <!-- Dynamic -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-poem">「 世间所有的美好，都值得被记录 」</div>
+  <p>拾光集 · 诗意栖居 © 2026</p>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <div class="lightbox-content">
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<!-- Poem Detail Modal -->
+<div class="modal-overlay" id="poemModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closePoemModal()">×</button>
+    <h2 id="modalTitle"></h2>
+    <div class="poem-meta" id="modalMeta"></div>
+    <div class="poem-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ==================== DATA STORE ====================
+const Store = {
+  get(key) {
+    try { return JSON.parse(localStorage.getItem(key)) || []; }
+    catch { return []; }
+  },
+  set(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+};
+
+// ==================== SAMPLE DATA ====================
+function initSampleData() {
+  if (!localStorage.getItem('poems')) {
+    Store.set('poems', [
+      {
+        id: 'p1',
+        title: '夜雨寄北',
+        date: '2026-06-15',
+        tags: ['抒情', '夜'],
+        content: '君问归期未有期\n巴山夜雨涨秋池\n何当共剪西窗烛\n却话巴山夜雨时'
+      },
+      {
+        id: 'p2',
+        title: '面朝大海',
+        date: '2026-05-20',
+        tags: ['理想', '海'],
+        content: '从明天起做一个幸福的人\n喂马劈柴周游世界\n从明天起关心粮食和蔬菜\n我有一所房子\n面朝大海春暖花开'
+      },
+      {
+        id: 'p3',
+        title: '一棵开花的树',
+        date: '2026-04-08',
+        tags: ['爱情', '树'],
+        content: '如何让你遇见我\n在我最美丽的时刻\n为这\n我已在佛前求了五百年\n求佛让我们结一段尘缘'
+      }
+    ]);
+  }
+  if (!localStorage.getItem('photos')) {
+    Store.set('photos', [
+      {
+        id: 'ph1',
+        title: '晨光熹微',
+        desc: '清晨五点，山间云海',
+        url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600',
+        date: '2026-06-01'
+      },
+      {
+        id: 'ph2',
+        title: '古镇小巷',
+        desc: '乌镇，雨后的石板路',
+        url: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=600',
+        date: '2026-05-15'
+      },
+      {
+        id: 'ph3',
+        title: '城市之光',
+        desc: '黄昏时分的天际线',
+        url: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600',
+        date: '2026-04-22'
+      },
+      {
+        id: 'ph4',
+        title: '静物时光',
+        desc: '窗边的旧书与咖啡',
+        url: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600',
+        date: '2026-03-10'
+      }
+    ]);
+  }
+}
+
+// ==================== RENDER ====================
+function renderPoems() {
+  const poems = Store.get('poems');
+  const grid = document.getElementById('poetryGrid');
+  grid.innerHTML = poems.map(p => `
+    <div class="poem-card fade-in" onclick="openPoem('${p.id}')">
+      <div class="poem-date">${p.date || ''}</div>
+      <h3>${escapeHtml(p.title)}</h3>
+      <div class="poem-preview">${escapeHtml(p.content)}</div>
+      <div class="poem-tags">
+        ${(p.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+  observeFadeIn();
+}
+
+function renderPhotos() {
+  const photos = Store.get('photos');
+  const grid = document.getElementById('photoGrid');
+  grid.innerHTML = photos.map(p => `
+    <div class="photo-card fade-in" onclick="openLightbox('${p.url}', '${escapeHtml(p.title)}')">
+      <img src="${p.url}" alt="${escapeHtml(p.title)}" loading="lazy"
+           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect fill=%22%23e8e4df%22 width=%22400%22 height=%22300%22/><text x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2220%22>📷</text></svg>'">
+      <div class="photo-overlay">
+        <h4>${escapeHtml(p.title)}</h4>
+        <p>${escapeHtml(p.desc || '')}</p>
+      </div>
+    </div>
+  `).join('');
+  observeFadeIn();
+}
+
+function renderManageLists() {
+  const poems = Store.get('poems');
+  const photos = Store.get('photos');
+
+  document.getElementById('poemList').innerHTML = poems.length === 0
+    ? '<p style="color:var(--text-light);text-align:center;padding:2rem;">还没有诗歌，去写一首吧 ✍️</p>'
+    : poems.map(p => `
+      <div class="work-item">
+        <div class="work-item-info">
+          <h4>${escapeHtml(p.title)}</h4>
+          <span>${p.date || '未标注日期'} · ${(p.tags || []).join(', ') || '无标签'}</span>
+        </div>
+        <div class="work-item-actions">
+          <button class="btn btn-secondary" onclick="editPoem('${p.id}')">编辑</button>
+          <button class="btn btn-danger" onclick="deletePoem('${p.id}')">删除</button>
+        </div>
+      </div>
+    `).join('');
+
+  document.getElementById('photoList').innerHTML = photos.length === 0
+    ? '<p style="color:var(--text-light);text-align:center;padding:2rem;">还没有照片，去上传吧 📷</p>'
+    : photos.map(p => `
+      <div class="work-item">
+        <div class="work-item-info">
+          <h4>${escapeHtml(p.title)}</h4>
+          <span>${escapeHtml(p.desc || '无描述')}</span>
+        </div>
+        <div class="work-item-actions">
+          <button class="btn btn-secondary" onclick="editPhoto('${p.id}')">编辑</button>
+          <button class="btn btn-danger" onclick="deletePhoto('${p.id}')">删除</button>
+        </div>
+      </div>
+    `).join('');
+}
+
+// ==================== POEM CRUD ====================
+document.getElementById('poemForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const poems = Store.get('poems');
+  const editId = document.getElementById('poemEditId').value;
+  const data = {
+    id: editId || 'p' + Date.now(),
+    title: document.getElementById('poemTitle').value.trim(),
+    date: document.getElementById('poemDate').value || new Date().toISOString().split('T')[0],
+    tags: document.getElementById('poemTags').value.split(/[,，]/).map(s => s.trim()).filter(Boolean),
+    content: document.getElementById('poemContent').value.trim()
+  };
+
+  if (editId) {
+    const idx = poems.findIndex(p => p.id === editId);
+    if (idx !== -1) poems[idx] = data;
+    showToast('诗歌已更新 ✨');
+  } else {
+    poems.unshift(data);
+    showToast('诗歌已保存 ✨');
+  }
+
+  Store.set('poems', poems);
+  resetPoemForm();
+  renderPoems();
+  renderManageLists();
+});
+
+function editPoem(id) {
+  const poems = Store.get('poems');
+  const p = poems.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('poemTitle').value = p.title;
+  document.getElementById('poemDate').value = p.date || '';
+  document.getElementById('poemTags').value = (p.tags || []).join(', ');
+  document.getElementById('poemContent').value = p.content;
+  document.getElementById('poemEditId').value = p.id;
+
+  // Switch to add tab
+  switchTab('addPoem');
+  window.scrollTo({ top: document.getElementById('manage').offsetTop - 80, behavior: 'smooth' });
+  showToast('正在编辑: ' + p.title);
+}
+
+function deletePoem(id) {
+  if (!confirm('确定删除这首诗吗？')) return;
+  const poems = Store.get('poems').filter(p => p.id !== id);
+  Store.set('poems', poems);
+  renderPoems();
+  renderManageLists();
+  showToast('已删除');
+}
+
+function resetPoemForm() {
+  document.getElementById('poemForm').reset();
+  document.getElementById('poemEditId').value = '';
+}
+
+// ==================== PHOTO CRUD ====================
+let photoDataUrl = '';
+
+document.getElementById('photoFile').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    photoDataUrl = ev.target.result;
+    document.getElementById('uploadPreview').innerHTML =
+      `<img src="${photoDataUrl}" alt="preview">`;
+  };
+  reader.readAsDataURL(file);
+});
+
+// Drag & drop
+const uploadArea = document.getElementById('uploadArea');
+uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.style.borderColor = 'var(--accent)'; });
+uploadArea.addEventListener('dragleave', () => { uploadArea.style.borderColor = 'var(--border)'; });
+uploadArea.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadArea.style.borderColor = 'var(--border)';
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) {
+    document.getElementById('photoFile').files = e.dataTransfer.files;
+    document.getElementById('photoFile').dispatchEvent(new Event('change'));
+  }
+});
+
+document.getElementById('photoForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const photos = Store.get('photos');
+  const editId = document.getElementById('photoEditId').value;
+  const data = {
+    id: editId || 'ph' + Date.now(),
+    title: document.getElementById('photoTitle').value.trim() || '未命名',
+    desc: document.getElementById('photoDesc').value.trim(),
+    url: photoDataUrl || (editId ? photos.find(p => p.id === editId)?.url : ''),
+    date: new Date().toISOString().split('T')[0]
+  };
+
+  if (!data.url) {
+    showToast('请先上传照片 📷');
+    return;
+  }
+
+  if (editId) {
+    const idx = photos.findIndex(p => p.id === editId);
+    if (idx !== -1) photos[idx] = data;
+    showToast('照片已更新 📷');
+  } else {
+    photos.unshift(data);
+    showToast('照片已上传 📷');
+  }
+
+  Store.set('photos', photos);
+  photoDataUrl = '';
+  document.getElementById('photoForm').reset();
+  document.getElementById('uploadPreview').innerHTML = '';
+  document.getElementById('photoEditId').value = '';
+  renderPhotos();
+  renderManageLists();
+});
+
+function editPhoto(id) {
+  const photos = Store.get('photos');
+  const p = photos.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('photoTitle').value = p.title;
+  document.getElementById('photoDesc').value = p.desc || '';
+  document.getElementById('photoEditId').value = p.id;
+  photoDataUrl = '';
+
+  switchTab('addPhoto');
+  window.scrollTo({ top: document.getElementById('manage').offsetTop - 80, behavior: 'smooth' });
+  showToast('正在编辑: ' + p.title);
+}
+
+function deletePhoto(id) {
+  if (!confirm('确定删除这张照片吗？')) return;
+  const photos = Store.get('photos').filter(p => p.id !== id);
+  Store.set('photos', photos);
+  renderPhotos();
+  renderManageLists();
+  showToast('已删除');
+}
+
+// ==================== MODALS ====================
+function openPoem(id) {
+  const poems = Store.get('poems');
+  const p = poems.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('modalTitle').textContent = p.title;
+  document.getElementById('modalMeta').textContent = `${p.date || ''}  ·  ${(p.tags || []).join(' / ')}`;
+  document.getElementById('modalBody').textContent = p.content;
+  document.getElementById('poemModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePoemModal() {
+  document.getElementById('poemModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function openLightbox(url, caption) {
+  document.getElementById('lightboxImg').src = url;
+  document.getElementById('lightboxCaption').textContent = caption;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close modals on backdrop click
+document.getElementById('poemModal').addEventListener('click', function(e) {
+  if (e.target === this) closePoemModal();
+});
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closePoemModal(); closeLightbox(); }
+});
+
+// ==================== TABS ====================
+document.querySelectorAll('.manage-tab').forEach(tab => {
+  tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+});
+
+function switchTab(tabId) {
+  document.querySelectorAll('.manage-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.manage-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+  document.getElementById(`panel-${tabId}`).classList.add('active');
+
+  if (tabId === 'managePoems' || tabId === 'managePhotos') {
+    renderManageLists();
+  }
+}
+
+// ==================== THEME ====================
+const themeToggle = document.getElementById('themeToggle');
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', theme);
+}
+
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  setTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+// Init theme
+const savedTheme = localStorage.getItem('theme') ||
+  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+setTheme(savedTheme);
+
+// ==================== MOBILE MENU ====================
+document.getElementById('menuBtn').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// ==================== NAV ACTIVE STATE ====================
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + 100;
+  sections.forEach(sec => {
+    const top = sec.offsetTop;
+    const height = sec.offsetHeight;
+    const id = sec.getAttribute('id');
+    const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+    if (link) {
+      link.classList.toggle('active', scrollY >= top && scrollY < top + height);
+    }
+  });
+});
+
+// ==================== SCROLL ANIMATIONS ====================
+function observeFadeIn() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in:not(.visible)').forEach(el => observer.observe(el));
+}
+
+// ==================== UTILITIES ====================
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ==================== INIT ====================
+initSampleData();
+renderPoems();
+renderPhotos();
+renderManageLists();
+observeFadeIn();
+</script>
+
+</body>
+</html>
