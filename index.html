@@ -169,20 +169,23 @@ nav {
 .hero-content { position: relative; z-index: 10; }
 
 .hero-greeting {
-  font-family: var(--font-hand);
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
   color: var(--accent);
   margin-bottom: 1.5rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.2em;
+  font-weight: 400;
+  font-style: italic;
   opacity: 0;
   animation: fadeUp 0.8s 0.2s var(--ease) forwards;
 }
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 10vw, 8rem);
+  font-size: clamp(4rem, 12vw, 10rem);
   font-weight: 400;
-  letter-spacing: 0.08em;
+  font-style: italic;
+  letter-spacing: 0.06em;
   line-height: 1.1;
   margin-bottom: 1.5rem;
   opacity: 0;
@@ -192,14 +195,14 @@ nav {
 .hero-title .accent { color: var(--accent); }
 
 .hero-subtitle {
-  font-family: var(--font-serif);
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-family: var(--font-sans);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
   color: var(--text-secondary);
   font-weight: 300;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   max-width: 600px;
   margin: 0 auto 3rem;
-  line-height: 2;
+  line-height: 2.2;
   opacity: 0;
   animation: fadeUp 0.8s 0.6s var(--ease) forwards;
 }
@@ -267,17 +270,18 @@ nav {
 
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 300;
-  letter-spacing: 0.05em;
+  font-style: italic;
+  letter-spacing: 0.06em;
   margin-bottom: 0.8rem;
 }
 
 .section-subtitle {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--text-secondary);
   font-weight: 300;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.15em;
   margin-bottom: 3rem;
 }
 
@@ -325,10 +329,11 @@ nav {
 }
 
 .about-text {
-  font-size: 1.05rem;
-  line-height: 2;
+  font-size: 1rem;
+  line-height: 2.2;
   color: var(--text-secondary);
   font-weight: 300;
+  letter-spacing: 0.03em;
 }
 
 .about-text p { margin-bottom: 1.5rem; }
@@ -343,9 +348,10 @@ nav {
 
 .stat-item .stat-num {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: var(--accent);
   font-weight: 300;
+  font-style: italic;
 }
 
 .stat-item .stat-label {
@@ -398,9 +404,10 @@ nav {
 }
 
 .poem-card h3 {
-  font-family: var(--font-serif);
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  font-style: italic;
   margin-bottom: 1rem;
   letter-spacing: 0.05em;
 }
@@ -498,8 +505,9 @@ nav {
 .gallery-item:hover .gallery-overlay { opacity: 1; }
 
 .gallery-overlay h4 {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 1rem;
+  font-style: italic;
   letter-spacing: 0.05em;
   margin-bottom: 0.3rem;
 }
@@ -651,11 +659,13 @@ nav {
 .modal-close:hover { color: var(--text-primary); }
 
 .modal h2 {
-  font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  font-style: italic;
   text-align: center;
   margin-bottom: 0.5rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
 }
 
 .modal .poem-meta {
@@ -753,8 +763,9 @@ footer {
 }
 
 .footer-quote {
-  font-family: var(--font-hand);
+  font-family: var(--font-display);
   font-size: 1.2rem;
+  font-style: italic;
   color: var(--accent);
   margin-bottom: 0.8rem;
   letter-spacing: 0.1em;
